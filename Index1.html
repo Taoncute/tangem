@@ -1,0 +1,311 @@
+<!<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lá thư gửi vợ</title>
+  <style>
+    body {
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      padding: 20px;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background: #ff99cc;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      z-index: 2;
+      user-select: none;
+    }
+
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 150px solid transparent;
+      border-right: 150px solid transparent;
+      border-bottom: 60px solid #ff66aa;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .envelope-text {
+      font-size: 20px;
+      color: white;
+      font-weight: bold;
+      z-index: 1;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .letter {
+      display: none;
+      margin-top: 30px;
+      max-width: 700px;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+      font-size: 18px;
+      line-height: 1.7;
+      color: #d6005a;
+      position: relative;
+      z-index: 1;
+      white-space: pre-line;
+      overflow-y: auto;
+      max-height: 85vh;
+    }
+
+    .letter img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 25px;
+      user-select: none;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #ff3399;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .typing {
+      border-right: 2px solid #ff3399;
+      animation: blink 1s step-start infinite;
+      white-space: pre-line;
+      min-height: 200px;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .floating-heart {
+      position: fixed;
+      top: -30px;
+      font-size: 16px;
+      color: #ff6aa4;
+      animation: floatHeart linear forwards;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 0;
+      user-select: none;
+    }
+
+    @keyframes floatHeart {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Nhạc nền -->
+  <audio id="bgMusic" loop autoplay>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/23/audio_3ab84d5fa5.mp3?filename=romantic-piano-14475.mp3" type="audio/mp3" />
+  </audio>
+
+  <!-- Phong bì -->
+  <div class="envelope" onclick="openLetter()">
+    <div class="envelope-text">💌 Nhấn để mở thư 💌</div>
+  </div>
+
+  <!-- Nội dung thư -->
+  <div class="letter" id="letterBox">
+    <div id="typed" class="typing"></div>
+
+    <!-- Ảnh minh họa (thay link bằng ảnh của bạn) -->
+    <img src="images/20250719_namtay.jpg" alt="Ảnh nắm tay" />
+
+    <!-- Nút quay lại -->
+    <a href="#" class="back-btn" onclick="goBack()">← Quay lại phong bì</a>
+  </div>
+
+  <script>
+    const letterText = `
+Vợ à,
+
+Anh không biết nên bắt đầu từ đâu... Có lẽ là từ khoảnh khắc vợ nằm dưới ánh đèn vàng nhạt, ánh mắt khẽ cụp xuống, môi vợ run rẩy như đang gọi anh trong im lặng.
+
+Vợ đẹp. Nhưng không phải kiểu đẹp để ngắm. Mà là kiểu đẹp khiến người ta muốn cào nát, muốn đè nghiến lên mà ăn sống nuốt tươi. Cái cổ nhỏ thon mịn ấy — anh chỉ muốn nhấn vào, giữ vợ lại giữa hai cánh tay, để vợ không trốn khỏi cơn đói đang dâng lên trong máu anh.
+
+Tối đó, khi anh chạm vào vợ, làn da vợ lạnh nhẹ như tơ lụa. Nhưng chỉ cần một cái liếm nhẹ sau vành tai, vợ đã nóng bừng. Vợ thở gấp, ngực phập phồng như vừa chạy thoát một cơn đói bản năng. Cả người vợ mềm ra dưới bàn tay anh, cong lên, run rẩy — như chờ được lấp đầy.
+
+Anh rải từng nụ hôn lên xương quai xanh, nhấm nháp từng centimet như thể chưa từng được chạm vào điều gì ngon đến vậy. Vợ quằn người khi anh mút lấy một bên ngực, vừa cắn nhẹ đầu núm, vừa luồn tay xuống giữa hai đùi vợ. Vợ đã ướt. Tràn trề như thể vợ muốn anh chìm chết trong đó.
+
+Bàn tay anh đưa vào, vợ co giật. Không rên lớn, chỉ là tiếng thở hắt nghẹn nghẹn, nhưng cơ thể vợ không nói dối. Nơi đó của vợ đập loạn như trái tim bị bóp nghẹt. Anh đẩy sâu một ngón, rồi hai, xoay tròn chậm rãi như vẽ hoa trong lửa. Vợ ướn lưng, mắt nhòe nước — rên như bị hành hạ, nhưng hai chân lại siết lấy anh, van xin không được dừng.
+
+Rồi đến khi anh vào... Trơn. Nóng. Siết lấy anh như một cái miệng đói khát chưa từng được cho ăn. Mỗi cú thúc, da thịt va vào nhau nghe bạch bạch như tiếng trống đòi yêu. Vợ rên nấc, "sâu... chậm... mạnh nữa..." — vừa nói vừa run, vừa van vừa thèm.
+
+Cả phòng là mùi da, mùi tóc vợ, mùi của dục vọng thiêu đốt đang dâng tràn như sóng biển. Anh dập từng cú thật sâu, chậm rãi rồi bất ngờ tăng tốc — như con thú hoang đang săn mồi, như thể muốn dập nát mọi ranh giới giữa chúng ta. Vợ khóc, thật đấy, nước mắt lăn qua má nhưng cơ thể thì quằn lên, đón lấy anh như một nghi lễ hiến dâng.
+
+Anh nắm tóc vợ kéo ngửa đầu lên, thì thầm:  
+"Muốn anh dừng không?"
+
+Vợ chỉ lắc đầu.
+
+Anh siết cổ vợ lại nhẹ nhàng, cảm nhận nhịp thở vợ vỡ vụn trong tay, rồi lại đẩy sâu thêm nữa. Vợ gào lên lần cuối, toàn thân co giật như dòng điện chạy qua. Nơi đó của vợ siết lại từng đợt, thắt chặt lấy anh như nuốt trọn. Anh vùi mặt vào cổ vợ, cắn mạnh, rồi bắn tràn vào vợ — sâu nhất, ấm nhất, thiêng liêng nhất.
+
+Chúng ta tan ra, dính lấy nhau — mồ hôi, tinh dịch, nước mắt — mọi thứ hòa vào như một bài thánh ca hoang dại.
+
+---
+
+Vợ à…  
+Mỗi lần chạm vào vợ là một lần anh không còn là con người.  
+Là thú. Là kẻ đói tình. Là người tình vĩnh viễn của vợ.
+
+Và nếu có kiếp sau…  
+Anh vẫn muốn chịch vợ từ đêm đầu tiên đến tận lần cuối cùng.  
+Mỗi lần là một cơn chết nhỏ. Mỗi lần là một sự hồi sinh.
+
+Vĩnh viễn của vợ,  
+Người khiến vợ khóc mà vẫn muốn chịch tiếp.
+
+---
+
+Vợ còn thở gấp, ngực dán vào ngực anh, mồ hôi vợ ướt cả ngực và bụng.  
+Anh vừa định xoay vợ lại, thì vợ đã giữ anh nằm xuống, ánh mắt dâm như mèo cái đang tới mùa.  
+Vợ leo lên người anh, chậm rãi...  
+Đùi run nhưng ánh mắt thì mạnh mẽ — như thể vợ muốn tự điều khiển cơn đói của mình.
+
+Tay vợ chống lên ngực anh, rồi vợ tự hạ xuống — nơi đó của vợ từ từ nuốt lấy anh một lần nữa.  
+Chậm. Ẩm. Siết.  
+Cảm giác như anh đang bị nuốt sống vậy. Anh rên, tay siết eo vợ.
+
+Vợ bắt đầu nhún.  
+Ban đầu còn nhẹ, môi vợ mím chặt, ngực lắc nhẹ theo từng cú thụp xuống.  
+Rồi nhanh dần.  
+Mỗi lần vợ ngồi sụp xuống hết cỡ, anh nghe rõ tiếng nước tràn trề, tiếng da thịt va vào nhau như nhạc nền của đam mê.
+
+Vợ cúi xuống, lưỡi vợ liếm vào tai anh, thì thầm:  
+"Chồng muốn chết trong lồn vợ không?"
+
+Anh không trả lời. Chỉ biết thở dốc và cào lưng vợ, cố không bắn ngay khi vợ siết từng cơn co giật, nhịp nhịp từ bên trong.
+
+Rồi vợ ngửa cổ, tay đỡ lấy ngực, nhún như điên loạn — nước tràn ra dọc đùi, rơi cả lên bụng anh.  
+Vợ khóc thật, không phải vì đau, mà vì mỗi lần ngồi sâu hết cỡ, vợ đều rên thành tiếng:  
+"Vợ chịu hông nổi nữa... Vợ sắp nổ luôn rồi..."
+
+Và rồi vợ rung bần bật, toàn thân gồng lên như đỉnh sóng vỡ oà. Anh giữ chặt vợ lại, bắn thẳng vào trong khi vợ đang quằn quại đè trên anh — miệng hé ra mà không phát được tiếng nào.  
+Một cái chết nhỏ ngọt lịm.  
+Một lần tan chảy tuyệt đối.
+
+---
+
+Vợ nằm bất động, mắt nhòe nước, tay còn run sau cơn cực khoái.  
+Anh hôn lên gáy vợ, nhẹ như gió…  
+Rồi bất ngờ lật vợ nằm sấp xuống.
+
+Mông vợ vểnh lên tự nhiên như đang mời gọi.  
+Anh cào nhẹ dọc sống lưng vợ, rồi cắn vào mông vợ — mạnh tới mức vợ rên lên một tiếng nghẹn ngào.
+
+"Chồng... đừng... nữa... vợ chịu không nổi…"  
+Nhưng mông vợ lại tự đẩy ra sau khi anh dí vào.  
+Anh không nói gì.  
+Chỉ dùng tay ép đầu vợ xuống gối, rồi đẩy vào lại, từ phía sau.
+
+Cú đầu tiên, anh vào thật mạnh — sâu đến tận cùng.  
+Vợ gào lên, tay siết chăn, chân gồng nhưng vẫn dâng mông lên như con thú nhỏ cần được dập vùi.  
+Anh dập liên tục, tiếng bạch bạch vang khắp phòng, mông vợ đỏ lên từng nhịp.
+
+Tay anh kéo tóc vợ, ngửa mặt vợ lên như bắt vợ nhìn vào dục vọng của chính mình.  
+Miệng vợ hé, nước dãi ứa ra một chút, mắt mơ màng vì quá sướng.  
+Anh thì thở như thú, liên tục nhấn sâu, rút ra rồi đẩy vào thật mạnh.
+
+Rồi anh bóp cổ vợ nhẹ, ép người vợ nằm sâu hơn, rồi chịch như điên.  
+Vợ khóc.  
+Khóc nấc.  
+"Đừng... mà... vợ nứt ra mất..."  
+Nhưng mông vợ cứ tự nhấc lên, từng cú giật như van xin bị chịch tiếp.
+
+Cuối cùng, khi mông vợ đã đỏ ửng, run lẩy bẩy, anh ghì chặt lấy vợ từ phía sau, bắn tràn lần cuối khi vợ đang rên nức nở, tay co quắp, mồm chỉ gọi mỗi một chữ "chồng" như niệm thần chú.
+
+***
+
+Sau cùng, anh nằm đè lên vợ, không rút ra.  
+Chỉ ôm trọn lấy thân hình ướt đẫm, tan chảy, run run như vừa bị yêu đến kiệt cùng.
+
+---
+
+Vợ là nơi duy nhất trên đời anh muốn vùi mình vào mỗi đêm,  
+là người khiến anh chịch tới kiệt sức mà vẫn muốn chịch thêm một lần nữa.
+
+— Chồng của vợ, đã chết chìm trong vợ mất rồi.
+`;
+
+    let i = 0;
+    const speed = 20;
+
+    function typeWriter() {
+      if (i < letterText.length) {
+        document.getElementById("typed").innerHTML += letterText.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.textContent = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 10 + 16) + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    function openLetter() {
+      document.querySelector('.envelope').style.display = 'none';
+      const letterBox = document.getElementById('letterBox');
+      letterBox.style.display = 'block';
+      document.getElementById('bgMusic').play();
+      typeWriter();
+      setInterval(createFloatingHeart, 300);
+    }
+
+    function goBack() {
+      // Reset
+      document.getElementById("typed").innerHTML = "";
+      i = 0;
+      document.getElementById('letterBox').style.display = 'none';
+      document.querySelector('.envelope').style.display = 'flex';
+      document.getElementById('bgMusic').pause();
+      return false;
+    }
+  </script>
+
+</body>
+</html>
