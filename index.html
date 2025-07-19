@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Số ngày bên embe</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: #e75480;
+      margin-bottom: 20px;
+    }
+
+    .avatars {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 50px;
+      position: relative;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .avatars img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ff99aa;
+      box-shadow: 0 0 10px #ff99aa;
+    }
+
+    .heartbeat-line {
+      position: relative;
+      width: 200px;
+      height: 80px;
+      overflow: hidden;
+    }
+
+    .heartbeat-line::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: -100%;
+      width: 200%;
+      height: 2px;
+      background: linear-gradient(to right, transparent 20%, red, transparent 80%);
+      animation: moveLine 2s linear infinite;
+      z-index: 2;
+    }
+
+    .heartbeat-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 80px;
+      z-index: 1;
+    }
+
+    @keyframes moveLine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    #result {
+      font-size: 24px;
+      color: #d6005a;
+      margin-top: 20px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .flying-heart {
+      position: fixed;
+      font-size: 18px;
+      color: #ff66aa;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.9;
+      animation: flyRandom 3s ease-out forwards;
+    }
+
+    @keyframes flyRandom {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(1.5) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* 🎀 Nút mở thư chuyển trang */
+    .go-to-letter {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background: linear-gradient(135deg, #ff99cc, #ff66aa);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .go-to-letter:hover {
+      background: linear-gradient(135deg, #ff66aa, #ff3399);
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(255, 105, 180, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💗 Số ngày bên embe 💗</h1>
+
+  <div class="avatars">
+    <img src="https://i.imgur.com/XGxv7QK.jpg" alt="Nam">
+
+    <div class="heartbeat-line">
+      <svg class="heartbeat-svg" viewBox="0 0 200 80">
+        <polyline
+          fill="none"
+          stroke="red"
+          stroke-width="2"
+          points="0,40 20,40 30,20 35,60 40,40 60,40 70,30 75,50 80,40 200,40" />
+      </svg>
+    </div>
+
+    <img src="https://i.imgur.com/khmzkqx.jpg" alt="Nữ">
+  </div>
+
+  <div id="result">Đang tính toán...</div>
+
+  <!-- 🔘 Nút chuyển sang trang Index1 -->
+  <a href="Index1.html" class="go-to-letter">💌 Đọc thư gửi embe 💌</a>
+
+  <script>
+    function updateDaysTogether() {
+      const startDate = new Date('2025-03-06');
+      const today = new Date();
+      startDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const diffTime = today - startDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      const result = document.getElementById('result');
+      result.innerText = diffDays >= 0
+        ? `🥰 Hai bạn đã bên nhau ${diffDays} ngày rồi đó nhaaa! 💞`
+        : `Ngày bắt đầu yêu là tương lai đó nha! 😅`;
+    }
+
+    updateDaysTogether();
+    setInterval(updateDaysTogether, 1000);
+
+    function createWildHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('flying-heart');
+      heart.innerText = '💖';
+
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+
+      const x = (Math.random() * 400 - 200) + 'px';
+      const y = (Math.random() * 400 - 200) + 'px';
+      heart.style.setProperty('--x', x);
+      heart.style.setProperty('--y', y);
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    setInterval(createWildHeart, 100);
+  </script>
+
+</body>
+</html>
